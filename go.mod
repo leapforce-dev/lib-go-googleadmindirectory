@@ -1,4 +1,4 @@
-module github.com/Leapforce-nl/go_google_adminsdk_directory
+module github.com/Leapforce-nl/go_googleadmindirectory
 
 go 1.13
 
