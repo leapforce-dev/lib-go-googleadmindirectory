@@ -23,14 +23,15 @@ type Group struct {
 	NonEditableAliases []string `json:"nonEditableAliases"`
 }
 
-func (gad *GoogleAdminDirectory) List(domain string) (*[]Group, error) {
+func (gad *GoogleAdminDirectory) Groups(domain string) (*[]Group, error) {
 
 	err := gad.Validate()
 	if err != nil {
 		return nil, err
 	}
 
-	url := fmt.Sprintf("%sgroups?domain=%s&key=%s", gad.baseURL, url.QueryEscape(domain), "key")
+	url := fmt.Sprintf("%sgroups?domain=%s", gad.baseURL, url.QueryEscape(domain))
+	//fmt.Println(url)
 
 	groupsReponse := GroupsResponse{}
 
