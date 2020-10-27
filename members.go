@@ -32,7 +32,7 @@ func (gad *GoogleAdminDirectory) Members(groupID string) (*[]Member, error) {
 
 	membersReponse := MembersResponse{}
 
-	err = gad.oAuth2.Get(url, &membersReponse)
+	_, err = gad.oAuth2.Get(url, &membersReponse)
 	if err != nil {
 		return nil, err
 	}

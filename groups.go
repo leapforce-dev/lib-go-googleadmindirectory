@@ -35,7 +35,7 @@ func (gad *GoogleAdminDirectory) Groups(domain string) (*[]Group, error) {
 
 	groupsReponse := GroupsResponse{}
 
-	err = gad.oAuth2.Get(url, &groupsReponse)
+	_, err = gad.oAuth2.Get(url, &groupsReponse)
 	if err != nil {
 		return nil, err
 	}

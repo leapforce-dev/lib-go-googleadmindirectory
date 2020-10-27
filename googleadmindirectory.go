@@ -2,40 +2,53 @@ package GoogleAdminDirectory
 
 import (
 	"fmt"
+	"net/http"
 	"strings"
 
 	bigquerytools "github.com/Leapforce-nl/go_bigquerytools"
 	types "github.com/Leapforce-nl/go_types"
 
-	googleoauth2 "github.com/Leapforce-nl/go_googleoauth2"
+	oauth2 "github.com/Leapforce-nl/go_oauth2"
 )
 
-const apiName string = "GoogleAdminDirectory"
+const (
+	apiName         string = "GoogleAdminDirectory"
+	apiURL          string = "https://www.googleapis.com/calendar/v3"
+	authURL         string = "https://accounts.google.com/o/oauth2/v2/auth"
+	tokenURL        string = "https://oauth2.googleapis.com/token"
+	tokenHTTPMethod string = http.MethodPost
+	redirectURL     string = "http://localhost:8080/oauth/redirect"
+)
 
 // GoogleAdminDirectory stores GoogleAdminDirectory configuration
 //
 type GoogleAdminDirectory struct {
 	baseURL string
-	oAuth2  *googleoauth2.GoogleOAuth2
+	oAuth2  *oauth2.OAuth2
 }
 
 // methods
 //
-func NewGoogleAdminDirectory(baseURL string, clientID string, clientSecret string, scopes []string, bigQuery *bigquerytools.BigQuery, isLive bool) (*GoogleAdminDirectory, error) {
-	gsc := GoogleAdminDirectory{}
-	gsc.baseURL = baseURL
+func NewGoogleAdminDirectory(clientID string, clientSecret string, scope string, bigQuery *bigquerytools.BigQuery, isLive bool) (*GoogleAdminDirectory, error) {
+	gad := GoogleAdminDirectory{}
 
-	_oAuth2 := new(googleoauth2.GoogleOAuth2)
-	_oAuth2.ApiName = apiName
-	_oAuth2.ClientID = clientID
-	_oAuth2.ClientSecret = clientSecret
-	_oAuth2.Scopes = scopes
-	_oAuth2.BigQuery = bigQuery
-	_oAuth2.IsLive = isLive
+	config := oauth2.OAuth2Config{
+		ApiName:         apiName,
+		ClientID:        clientID,
+		ClientSecret:    clientSecret,
+		Scope:           scope,
+		RedirectURL:     redirectURL,
+		AuthURL:         authURL,
+		TokenURL:        tokenURL,
+		TokenHTTPMethod: tokenHTTPMethod,
+	}
+	gad.oAuth2 = oauth2.NewOAuth(config, bigQuery, isLive)
 
-	gsc.oAuth2 = _oAuth2
+	return &gad, nil
+}
 
-	return &gsc, nil
+func (gad *GoogleAdminDirectory) InitToken() error {
+	return gad.oAuth2.InitToken()
 }
 
 func (gad *GoogleAdminDirectory) Validate() error {
