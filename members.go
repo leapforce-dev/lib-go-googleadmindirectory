@@ -21,18 +21,12 @@ type Member struct {
 }
 
 func (gad *GoogleAdminDirectory) Members(groupID string) (*[]Member, error) {
-
-	err := gad.Validate()
-	if err != nil {
-		return nil, err
-	}
-
-	url := fmt.Sprintf("%sgroups/%s/members", gad.baseURL, groupID)
+	url := fmt.Sprintf("%s/groups/%s/members", apiURL, groupID)
 	//fmt.Println(url)
 
 	membersReponse := MembersResponse{}
 
-	_, err = gad.oAuth2.Get(url, &membersReponse)
+	_, err := gad.oAuth2.Get(url, &membersReponse)
 	if err != nil {
 		return nil, err
 	}

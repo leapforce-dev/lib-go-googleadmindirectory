@@ -24,18 +24,12 @@ type Group struct {
 }
 
 func (gad *GoogleAdminDirectory) Groups(domain string) (*[]Group, error) {
-
-	err := gad.Validate()
-	if err != nil {
-		return nil, err
-	}
-
-	url := fmt.Sprintf("%sgroups?domain=%s", gad.baseURL, url.QueryEscape(domain))
+	url := fmt.Sprintf("%s/groups?domain=%s", apiURL, url.QueryEscape(domain))
 	//fmt.Println(url)
 
 	groupsReponse := GroupsResponse{}
 
-	_, err = gad.oAuth2.Get(url, &groupsReponse)
+	_, err := gad.oAuth2.Get(url, &groupsReponse)
 	if err != nil {
 		return nil, err
 	}

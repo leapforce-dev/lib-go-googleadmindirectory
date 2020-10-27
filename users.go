@@ -51,18 +51,12 @@ type User struct {
 }
 
 func (gad *GoogleAdminDirectory) Users(domain string) (*[]User, error) {
-
-	err := gad.Validate()
-	if err != nil {
-		return nil, err
-	}
-
-	url := fmt.Sprintf("%susers?domain=%s", gad.baseURL, domain)
-	fmt.Println(url)
+	url := fmt.Sprintf("%s/users?domain=%s", apiURL, domain)
+	//fmt.Println(url)
 
 	usersReponse := UsersResponse{}
 
-	_, err = gad.oAuth2.Get(url, &usersReponse)
+	_, err := gad.oAuth2.Get(url, &usersReponse)
 	if err != nil {
 		return nil, err
 	}
