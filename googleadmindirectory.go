@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	bigquerytools "github.com/leapforce-libraries/go_bigquerytools"
-
+	errortools "github.com/leapforce-libraries/go_errortools"
 	oauth2 "github.com/leapforce-libraries/go_oauth2"
 )
 
@@ -25,7 +25,7 @@ type GoogleAdminDirectory struct {
 
 // methods
 //
-func NewGoogleAdminDirectory(clientID string, clientSecret string, scope string, bigQuery *bigquerytools.BigQuery, isLive bool) (*GoogleAdminDirectory, error) {
+func NewGoogleAdminDirectory(clientID string, clientSecret string, scope string, bigQuery *bigquerytools.BigQuery, isLive bool) *GoogleAdminDirectory {
 	gad := GoogleAdminDirectory{}
 
 	config := oauth2.OAuth2Config{
@@ -40,9 +40,9 @@ func NewGoogleAdminDirectory(clientID string, clientSecret string, scope string,
 	}
 	gad.oAuth2 = oauth2.NewOAuth(config, bigQuery, isLive)
 
-	return &gad, nil
+	return &gad
 }
 
-func (gad *GoogleAdminDirectory) InitToken() error {
+func (gad *GoogleAdminDirectory) InitToken() *errortools.Error {
 	return gad.oAuth2.InitToken()
 }

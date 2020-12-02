@@ -3,6 +3,8 @@ package GoogleAdminDirectory
 import (
 	"fmt"
 	"net/url"
+
+	errortools "github.com/leapforce-libraries/go_errortools"
 )
 
 type GroupsResponse struct {
@@ -23,15 +25,15 @@ type Group struct {
 	NonEditableAliases []string `json:"nonEditableAliases"`
 }
 
-func (gad *GoogleAdminDirectory) Groups(domain string) (*[]Group, error) {
+func (gad *GoogleAdminDirectory) Groups(domain string) (*[]Group, *errortools.Error) {
 	url := fmt.Sprintf("%s/groups?domain=%s", apiURL, url.QueryEscape(domain))
 	//fmt.Println(url)
 
 	groupsReponse := GroupsResponse{}
 
-	_, err := gad.oAuth2.Get(url, &groupsReponse)
-	if err != nil {
-		return nil, err
+	_, _, e := gad.oAuth2.Get(url, &groupsReponse, nil)
+	if e != nil {
+		return nil, e
 	}
 
 	return &groupsReponse.Groups, nil

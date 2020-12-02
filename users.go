@@ -2,6 +2,8 @@ package GoogleAdminDirectory
 
 import (
 	"fmt"
+
+	errortools "github.com/leapforce-libraries/go_errortools"
 )
 
 type UsersResponse struct {
@@ -50,13 +52,13 @@ type User struct {
 	ThumbnailPhotoEtag         string   `json:"thumbnailPhotoEtag"`
 }
 
-func (gad *GoogleAdminDirectory) Users(domain string) (*[]User, error) {
+func (gad *GoogleAdminDirectory) Users(domain string) (*[]User, *errortools.Error) {
 	url := fmt.Sprintf("%s/users?domain=%s", apiURL, domain)
 	//fmt.Println(url)
 
 	usersReponse := UsersResponse{}
 
-	_, err := gad.oAuth2.Get(url, &usersReponse)
+	_, _, err := gad.oAuth2.Get(url, &usersReponse, nil)
 	if err != nil {
 		return nil, err
 	}

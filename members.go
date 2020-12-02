@@ -2,6 +2,8 @@ package GoogleAdminDirectory
 
 import (
 	"fmt"
+
+	errortools "github.com/leapforce-libraries/go_errortools"
 )
 
 type MembersResponse struct {
@@ -20,13 +22,13 @@ type Member struct {
 	Status string `json:"status"`
 }
 
-func (gad *GoogleAdminDirectory) Members(groupID string) (*[]Member, error) {
+func (gad *GoogleAdminDirectory) Members(groupID string) (*[]Member, *errortools.Error) {
 	url := fmt.Sprintf("%s/groups/%s/members", apiURL, groupID)
 	//fmt.Println(url)
 
 	membersReponse := MembersResponse{}
 
-	_, err := gad.oAuth2.Get(url, &membersReponse)
+	_, _, err := gad.oAuth2.Get(url, &membersReponse, nil)
 	if err != nil {
 		return nil, err
 	}
