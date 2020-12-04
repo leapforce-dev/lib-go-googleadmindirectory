@@ -25,7 +25,7 @@ type GoogleAdminDirectory struct {
 
 // methods
 //
-func NewGoogleAdminDirectory(clientID string, clientSecret string, scope string, bigQuery *bigquerytools.BigQuery, isLive bool) *GoogleAdminDirectory {
+func NewGoogleAdminDirectory(clientID string, clientSecret string, scope string, bigQuery *bigquerytools.BigQuery) *GoogleAdminDirectory {
 	gad := GoogleAdminDirectory{}
 
 	config := oauth2.OAuth2Config{
@@ -38,7 +38,7 @@ func NewGoogleAdminDirectory(clientID string, clientSecret string, scope string,
 		TokenURL:        tokenURL,
 		TokenHTTPMethod: tokenHTTPMethod,
 	}
-	gad.oAuth2 = oauth2.NewOAuth(config, bigQuery, isLive)
+	gad.oAuth2 = oauth2.NewOAuth(config, bigQuery)
 
 	return &gad
 }
