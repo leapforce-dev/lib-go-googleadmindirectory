@@ -5,6 +5,7 @@ import (
 	"net/url"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
+	googleerror "github.com/leapforce-libraries/go_googleerror"
 )
 
 type GroupsResponse struct {
@@ -29,10 +30,14 @@ func (gad *GoogleAdminDirectory) Groups(domain string) (*[]Group, *errortools.Er
 	url := fmt.Sprintf("%s/groups?domain=%s", apiURL, url.QueryEscape(domain))
 	//fmt.Println(url)
 
+	googleError := googleerror.GoogleError{}
 	groupsReponse := GroupsResponse{}
 
-	_, _, e := gad.oAuth2.Get(url, &groupsReponse, nil)
+	_, _, e := gad.oAuth2.Get(url, &groupsReponse, &googleError)
 	if e != nil {
+		if googleError.Error.Message != "" {
+			e.SetMessage(googleError.Error.Message)
+		}
 		return nil, e
 	}
 
