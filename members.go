@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
-	googleerror "github.com/leapforce-libraries/go_googleerror"
 )
 
 type MembersResponse struct {
@@ -25,16 +24,11 @@ type Member struct {
 
 func (gad *GoogleAdminDirectory) Members(groupID string) (*[]Member, *errortools.Error) {
 	url := fmt.Sprintf("%s/groups/%s/members", apiURL, groupID)
-	//fmt.Println(url)
 
-	googleError := googleerror.GoogleError{}
 	membersReponse := MembersResponse{}
 
-	_, _, e := gad.oAuth2.Get(url, &membersReponse, &googleError)
+	_, _, e := gad.Client.Get(url, &membersReponse)
 	if e != nil {
-		if googleError.Error.Message != "" {
-			e.SetMessage(googleError.Error.Message)
-		}
 		return nil, e
 	}
 
