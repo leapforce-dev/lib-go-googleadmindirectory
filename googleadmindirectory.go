@@ -1,19 +1,13 @@
 package GoogleAdminDirectory
 
 import (
-	"net/http"
-
 	bigquerytools "github.com/leapforce-libraries/go_bigquerytools"
 	google "github.com/leapforce-libraries/go_google"
 )
 
 const (
-	apiName         string = "GoogleAdminDirectory"
-	apiURL          string = "https://www.googleapis.com/admin/directory/v1"
-	authURL         string = "https://accounts.google.com/o/oauth2/v2/auth"
-	tokenURL        string = "https://oauth2.googleapis.com/token"
-	tokenHTTPMethod string = http.MethodPost
-	redirectURL     string = "http://localhost:8080/oauth/redirect"
+	apiName string = "GoogleAdminDirectory"
+	apiURL  string = "https://www.googleapis.com/admin/directory/v1"
 )
 
 // GoogleAdminDirectory stores GoogleAdminDirectory configuration
