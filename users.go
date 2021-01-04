@@ -54,6 +54,7 @@ type User struct {
 
 func (gad *GoogleAdminDirectory) Users(domain string) (*[]User, *errortools.Error) {
 	url := fmt.Sprintf("%s/users?domain=%s", apiURL, domain)
+	//fmt.Println(url)
 
 	usersReponse := UsersResponse{}
 

@@ -1,7 +1,6 @@
 package GoogleAdminDirectory
 
 import (
-	bigquerytools "github.com/leapforce-libraries/go_bigquerytools"
 	google "github.com/leapforce-libraries/go_google"
 )
 
@@ -18,7 +17,7 @@ type GoogleAdminDirectory struct {
 
 // methods
 //
-func NewGoogleAdminDirectory(clientID string, clientSecret string, scope string, bigQuery *bigquerytools.BigQuery) *GoogleAdminDirectory {
+func NewGoogleAdminDirectory(clientID string, clientSecret string, scope string, bigQuery *google.BigQuery) *GoogleAdminDirectory {
 	config := google.GoogleClientConfig{
 		APIName:      apiName,
 		ClientID:     clientID,
