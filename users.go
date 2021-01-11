@@ -1,4 +1,4 @@
-package GoogleAdminDirectory
+package googleadmindirectory
 
 import (
 	"fmt"
@@ -52,13 +52,13 @@ type User struct {
 	ThumbnailPhotoEtag         string   `json:"thumbnailPhotoEtag"`
 }
 
-func (gad *GoogleAdminDirectory) Users(domain string) (*[]User, *errortools.Error) {
+func (service *Service) Users(domain string) (*[]User, *errortools.Error) {
 	url := fmt.Sprintf("%s/users?domain=%s", apiURL, domain)
 	//fmt.Println(url)
 
 	usersReponse := UsersResponse{}
 
-	_, _, e := gad.Client.Get(url, &usersReponse)
+	_, _, e := service.googleService.Get(url, &usersReponse)
 	if e != nil {
 		return nil, e
 	}

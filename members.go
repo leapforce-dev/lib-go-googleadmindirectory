@@ -1,4 +1,4 @@
-package GoogleAdminDirectory
+package googleadmindirectory
 
 import (
 	"fmt"
@@ -22,12 +22,12 @@ type Member struct {
 	Status string `json:"status"`
 }
 
-func (gad *GoogleAdminDirectory) Members(groupID string) (*[]Member, *errortools.Error) {
+func (service *Service) Members(groupID string) (*[]Member, *errortools.Error) {
 	url := fmt.Sprintf("%s/groups/%s/members", apiURL, groupID)
 
 	membersReponse := MembersResponse{}
 
-	_, _, e := gad.Client.Get(url, &membersReponse)
+	_, _, e := service.googleService.Get(url, &membersReponse)
 	if e != nil {
 		return nil, e
 	}

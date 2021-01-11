@@ -1,4 +1,4 @@
-package GoogleAdminDirectory
+package googleadmindirectory
 
 import (
 	google "github.com/leapforce-libraries/go_google"
@@ -11,21 +11,21 @@ const (
 
 // GoogleAdminDirectory stores GoogleAdminDirectory configuration
 //
-type GoogleAdminDirectory struct {
-	Client *google.GoogleClient
+type Service struct {
+	googleService *google.Service
 }
 
 // methods
 //
-func NewGoogleAdminDirectory(clientID string, clientSecret string, scope string, bigQuery *google.BigQuery) *GoogleAdminDirectory {
-	config := google.GoogleClientConfig{
+func NewService(clientID string, clientSecret string, scope string, bigQuery *google.BigQuery) *Service {
+	config := google.ServiceConfig{
 		APIName:      apiName,
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		Scope:        scope,
 	}
 
-	googleClient := google.NewGoogleClient(config, bigQuery)
+	googleService := google.NewService(config, bigQuery)
 
-	return &GoogleAdminDirectory{googleClient}
+	return &Service{googleService}
 }

@@ -1,4 +1,4 @@
-package GoogleAdminDirectory
+package googleadmindirectory
 
 import (
 	"fmt"
@@ -25,12 +25,12 @@ type Group struct {
 	NonEditableAliases []string `json:"nonEditableAliases"`
 }
 
-func (gad *GoogleAdminDirectory) Groups(domain string) (*[]Group, *errortools.Error) {
+func (service *Service) Groups(domain string) (*[]Group, *errortools.Error) {
 	url := fmt.Sprintf("%s/groups?domain=%s", apiURL, url.QueryEscape(domain))
 
 	groupsReponse := GroupsResponse{}
 
-	_, _, e := gad.Client.Get(url, &groupsReponse)
+	_, _, e := service.googleService.Get(url, &groupsReponse)
 	if e != nil {
 		return nil, e
 	}
