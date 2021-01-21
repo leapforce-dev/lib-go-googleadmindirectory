@@ -5,6 +5,7 @@ import (
 	"net/url"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
+	oauth2 "github.com/leapforce-libraries/go_oauth2"
 )
 
 type GroupsResponse struct {
@@ -26,14 +27,17 @@ type Group struct {
 }
 
 func (service *Service) Groups(domain string) (*[]Group, *errortools.Error) {
-	url := fmt.Sprintf("%s/groups?domain=%s", apiURL, url.QueryEscape(domain))
+	groupsResponse := GroupsResponse{}
 
-	groupsReponse := GroupsResponse{}
+	requestConfig := oauth2.RequestConfig{
+		URL:           service.url(fmt.Sprintf("groups?domain=%s", url.QueryEscape(domain))),
+		ResponseModel: &groupsResponse,
+	}
 
-	_, _, e := service.googleService.Get(url, &groupsReponse)
+	_, _, e := service.googleService.Get(&requestConfig)
 	if e != nil {
 		return nil, e
 	}
 
-	return &groupsReponse.Groups, nil
+	return &groupsResponse.Groups, nil
 }

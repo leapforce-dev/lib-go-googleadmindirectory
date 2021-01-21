@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
+	oauth2 "github.com/leapforce-libraries/go_oauth2"
 )
 
 type UsersResponse struct {
@@ -53,12 +54,14 @@ type User struct {
 }
 
 func (service *Service) Users(domain string) (*[]User, *errortools.Error) {
-	url := fmt.Sprintf("%s/users?domain=%s", apiURL, domain)
-	//fmt.Println(url)
-
 	usersReponse := UsersResponse{}
 
-	_, _, e := service.googleService.Get(url, &usersReponse)
+	requestConfig := oauth2.RequestConfig{
+		URL:           service.url(fmt.Sprintf("users?domain=%s", domain)),
+		ResponseModel: &usersReponse,
+	}
+
+	_, _, e := service.googleService.Get(&requestConfig)
 	if e != nil {
 		return nil, e
 	}
