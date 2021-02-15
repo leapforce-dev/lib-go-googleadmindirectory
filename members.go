@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
-	oauth2 "github.com/leapforce-libraries/go_oauth2"
+	go_http "github.com/leapforce-libraries/go_http"
 )
 
 type MembersResponse struct {
@@ -26,7 +26,7 @@ type Member struct {
 func (service *Service) Members(groupID string) (*[]Member, *errortools.Error) {
 	membersReponse := MembersResponse{}
 
-	requestConfig := oauth2.RequestConfig{
+	requestConfig := go_http.RequestConfig{
 		URL:           service.url(fmt.Sprintf("groups/%s/members", groupID)),
 		ResponseModel: &membersReponse,
 	}

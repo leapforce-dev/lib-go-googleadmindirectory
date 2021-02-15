@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
-	oauth2 "github.com/leapforce-libraries/go_oauth2"
+	go_http "github.com/leapforce-libraries/go_http"
 )
 
 type UsersResponse struct {
@@ -56,7 +56,7 @@ type User struct {
 func (service *Service) Users(domain string) (*[]User, *errortools.Error) {
 	usersReponse := UsersResponse{}
 
-	requestConfig := oauth2.RequestConfig{
+	requestConfig := go_http.RequestConfig{
 		URL:           service.url(fmt.Sprintf("users?domain=%s", domain)),
 		ResponseModel: &usersReponse,
 	}

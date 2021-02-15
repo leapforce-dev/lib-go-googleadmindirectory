@@ -5,7 +5,7 @@ import (
 	"net/url"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
-	oauth2 "github.com/leapforce-libraries/go_oauth2"
+	go_http "github.com/leapforce-libraries/go_http"
 )
 
 type GroupsResponse struct {
@@ -29,7 +29,7 @@ type Group struct {
 func (service *Service) Groups(domain string) (*[]Group, *errortools.Error) {
 	groupsResponse := GroupsResponse{}
 
-	requestConfig := oauth2.RequestConfig{
+	requestConfig := go_http.RequestConfig{
 		URL:           service.url(fmt.Sprintf("groups?domain=%s", url.QueryEscape(domain))),
 		ResponseModel: &groupsResponse,
 	}
