@@ -2,6 +2,7 @@ package googleadmindirectory
 
 import (
 	"fmt"
+	"net/http"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
 	go_http "github.com/leapforce-libraries/go_http"
@@ -57,11 +58,12 @@ func (service *Service) Users(domain string) (*[]User, *errortools.Error) {
 	usersReponse := UsersResponse{}
 
 	requestConfig := go_http.RequestConfig{
+		Method:        http.MethodGet,
 		URL:           service.url(fmt.Sprintf("users?domain=%s", domain)),
 		ResponseModel: &usersReponse,
 	}
 
-	_, _, e := service.googleService.Get(&requestConfig)
+	_, _, e := service.googleService.HTTPRequest(&requestConfig)
 	if e != nil {
 		return nil, e
 	}

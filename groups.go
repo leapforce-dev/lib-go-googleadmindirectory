@@ -2,6 +2,7 @@ package googleadmindirectory
 
 import (
 	"fmt"
+	"net/http"
 	"net/url"
 
 	errortools "github.com/leapforce-libraries/go_errortools"
@@ -30,11 +31,12 @@ func (service *Service) Groups(domain string) (*[]Group, *errortools.Error) {
 	groupsResponse := GroupsResponse{}
 
 	requestConfig := go_http.RequestConfig{
+		Method:        http.MethodGet,
 		URL:           service.url(fmt.Sprintf("groups?domain=%s", url.QueryEscape(domain))),
 		ResponseModel: &groupsResponse,
 	}
 
-	_, _, e := service.googleService.Get(&requestConfig)
+	_, _, e := service.googleService.HTTPRequest(&requestConfig)
 	if e != nil {
 		return nil, e
 	}
