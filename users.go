@@ -17,7 +17,7 @@ type UsersResponse struct {
 type User struct {
 	Kind         string `json:"kind"`
 	Etag         string `json:"etag"`
-	ID           string `json:"id"`
+	Id           string `json:"id"`
 	PrimaryEmail string `json:"primaryEmail"`
 	Name         struct {
 		GivenName  string `json:"givenName"`
@@ -44,10 +44,10 @@ type User struct {
 		Type  string `json:"type"`
 	} `json:"phones"`
 	NonEditableAliases         []string `json:"nonEditableAliases"`
-	CustomerID                 string   `json:"customerId"`
+	CustomerId                 string   `json:"customerId"`
 	OrgUnitPath                string   `json:"orgUnitPath"`
 	IsMailboxSetup             bool     `json:"isMailboxSetup"`
-	IsEnrolledIn2SV            bool     `json:"isEnrolledIn2Sv"`
+	IsEnrolledIn2Sv            bool     `json:"isEnrolledIn2Sv"`
 	IsEnforcedIn2Sv            bool     `json:"isEnforcedIn2Sv"`
 	IncludeInGlobalAddressList bool     `json:"includeInGlobalAddressList"`
 	ThumbnailPhotoUrl          string   `json:"thumbnailPhotoUrl"`

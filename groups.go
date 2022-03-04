@@ -17,7 +17,7 @@ type GroupsResponse struct {
 
 type Group struct {
 	Kind               string   `json:"kind"`
-	ID                 string   `json:"id"`
+	Id                 string   `json:"id"`
 	Etag               string   `json:"etag"`
 	Email              string   `json:"email"`
 	Name               string   `json:"name"`

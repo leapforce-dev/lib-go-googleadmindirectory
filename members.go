@@ -17,19 +17,19 @@ type MembersResponse struct {
 type Member struct {
 	Kind   string `json:"kind"`
 	Etag   string `json:"etag"`
-	ID     string `json:"id"`
+	Id     string `json:"id"`
 	Email  string `json:"email"`
 	Role   string `json:"role"`
 	Type   string `json:"type"`
 	Status string `json:"status"`
 }
 
-func (service *Service) Members(groupID string) (*[]Member, *errortools.Error) {
+func (service *Service) Members(groupId string) (*[]Member, *errortools.Error) {
 	membersReponse := MembersResponse{}
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodGet,
-		Url:           service.url(fmt.Sprintf("groups/%s/members", groupID)),
+		Url:           service.url(fmt.Sprintf("groups/%s/members", groupId)),
 		ResponseModel: &membersReponse,
 	}
 
