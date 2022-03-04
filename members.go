@@ -29,11 +29,11 @@ func (service *Service) Members(groupID string) (*[]Member, *errortools.Error) {
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodGet,
-		URL:           service.url(fmt.Sprintf("groups/%s/members", groupID)),
+		Url:           service.url(fmt.Sprintf("groups/%s/members", groupID)),
 		ResponseModel: &membersReponse,
 	}
 
-	_, _, e := service.googleService.HTTPRequest(&requestConfig)
+	_, _, e := service.googleService.HttpRequest(&requestConfig)
 	if e != nil {
 		return nil, e
 	}

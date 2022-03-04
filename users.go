@@ -50,7 +50,7 @@ type User struct {
 	IsEnrolledIn2SV            bool     `json:"isEnrolledIn2Sv"`
 	IsEnforcedIn2Sv            bool     `json:"isEnforcedIn2Sv"`
 	IncludeInGlobalAddressList bool     `json:"includeInGlobalAddressList"`
-	ThumbnailPhotoURL          string   `json:"thumbnailPhotoUrl"`
+	ThumbnailPhotoUrl          string   `json:"thumbnailPhotoUrl"`
 	ThumbnailPhotoEtag         string   `json:"thumbnailPhotoEtag"`
 }
 
@@ -59,11 +59,11 @@ func (service *Service) Users(domain string) (*[]User, *errortools.Error) {
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodGet,
-		URL:           service.url(fmt.Sprintf("users?domain=%s", domain)),
+		Url:           service.url(fmt.Sprintf("users?domain=%s", domain)),
 		ResponseModel: &usersReponse,
 	}
 
-	_, _, e := service.googleService.HTTPRequest(&requestConfig)
+	_, _, e := service.googleService.HttpRequest(&requestConfig)
 	if e != nil {
 		return nil, e
 	}

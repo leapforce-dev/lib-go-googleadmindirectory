@@ -32,11 +32,11 @@ func (service *Service) Groups(domain string) (*[]Group, *errortools.Error) {
 
 	requestConfig := go_http.RequestConfig{
 		Method:        http.MethodGet,
-		URL:           service.url(fmt.Sprintf("groups?domain=%s", url.QueryEscape(domain))),
+		Url:           service.url(fmt.Sprintf("groups?domain=%s", url.QueryEscape(domain))),
 		ResponseModel: &groupsResponse,
 	}
 
-	_, _, e := service.googleService.HTTPRequest(&requestConfig)
+	_, _, e := service.googleService.HttpRequest(&requestConfig)
 	if e != nil {
 		return nil, e
 	}
